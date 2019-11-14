@@ -1,4 +1,4 @@
 <script>
-alert("goal")  
+alert("goal!")  
   
 </script>

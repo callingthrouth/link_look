@@ -1,1 +1,4 @@
-<script></script>
+<script>
+alert("goal")  
+  
+</script>

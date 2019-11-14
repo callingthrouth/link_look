@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>练练看</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+
+        ul{
+            list-style: none;
+        }
+
+        body {
+            background-color: aqua;
+        }
+    
+        #wrap{
+            width: 900px;
+            height: 900px;
+            margin: 50px auto;
+        }
+
+        #wrap ul{
+            width: 100%;
+            height: 100%;
+        }
+
+        #wrap ul li{
+            position: relative;
+            float: left;
+            height: 200px;
+            width: 200px;
+            cursor: pointer;
+            box-shadow: 5px 5px rgba(0,0,0,.5);
+            overflow: hidden;
+            border-radius: 10px;
+            margin-left: 20px;
+            
+            
+        }
+
+        ul li img.back{
+            position: absolute;
+            /* background-size:cover; */
+            top: 0;
+            left: 0;
+        }
+
+        ul li span{
+            display: none;
+            
+        }
+
+        .active{
+            margin-top: -73px;
+            margin-left: -73px;
+            opacity: 0;
+            animation: active 0.6s;
+        }
+
+        @keyframes active{
+            0%{
+                margin-top: 0px;
+                margin-left: 0px;
+                opacity: 1;
+            }
+            100%{
+                margin-top: -73px;
+                margin-left: -73px;
+                opacity: 0;
+            }
+        }
+
+        .unactive{
+            margin-top: 0px;
+            margin-left: 0px;
+            opacity: 1;
+            animation: unactive 0.6s;
+        }
+
+        @keyframes unactive{
+            0% {
+                margin-top: -73px;
+                margin-left: -73px;
+                opacity: 0;
+            }
+            100% {
+                margin-top: 0px;
+                margin-left: 0px;
+                opacity: 1;
+            }
+        }
+    
+    
+    
+    </style>
+</head>
+<body>
+    <div id="wrap">
+        <ul>
+            <li>
+                <!-- <img class="back" src="../img/wh1.png" alt="">
+                <img src="../img/yellow_diamond0.png" alt=""> -->
+            </li>
+        </ul>
+
+    </div>
+    <script>
+        //获取ul的这个元素id
+        var oUl = document.querySelector("#wrap ul");
+        var arr = [0,1,2,3,4,5,6,7];
+            arr.push(...arr);
+            // console.log( arr );
+        var num = arr.sort(function(){
+            return Math.random()-0.5;
+        })
+
+        //生成li内容
+        //由于是一个数组,所以依次拿num[i] 这个数组中的每个下标
+        var str = "";
+        for(var i = 0;i<arr.length;i++){
+            str += `
+                <li>
+                    <img class="back" src="../img/wh1.png" alt="">
+                    <img src="../img/yellow_diamond${num[i]}.png" alt="">
+                    <span>${num[i]}</span>
+                </li>
+            `
+        }
+        oUl.innerHTML = str;
+        var aBack = document.querySelectorAll("img.back");
+        var aSpan = document.querySelectorAll("ul li span");
+        var back_arr = [];
+        var span_arr = [];
+
+        //给每个图片添加一个点击事件
+        for(var i=0;i<aBack.length;i++){
+            aBack[i].index = i;
+            aBack[i].onclick = function(){
+                this.classList.add("active");
+                this.classList.remove("unactive");
+                back_arr.push(this.index);//判断是否是2次点击
+            var spanHtml = aSpan[this.index].innerText;
+                //判断数组中的第一个和第二个是否相等
+                span_arr.push(spanHtml)
+                if(back_arr.length == 2){
+                    if(span_arr[0] == span_arr[1]){
+                        //清空数组
+                        back_arr.length = 0;
+                        span_arr.length = 0;
+                    } else {
+                        aBack[back_arr[0]].classList.remove('active')
+                        aBack[back_arr[1]].classList.remove('active')
+                        aBack[back_arr[0]].classList.add('unactive')
+                        aBack[back_arr[1]].classList.add('unactive')
+                        //清空数组
+                        back_arr.length = 0;
+                        span_arr.length = 0;
+                     }
+                    }
+                  }
+                }
+
+
+
+
+
+    </script>
+</body>
+</html>
